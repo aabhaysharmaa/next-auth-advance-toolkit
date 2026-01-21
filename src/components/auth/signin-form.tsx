@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Form,
   FormControl,
@@ -18,7 +19,7 @@ import { LoginSchema } from "@/schemas";
 import { Error } from "../error";
 import { Success } from "../success";
 import { CardWrapper } from "./card-wrapper";
-import { signIn } from "@/actions/signin";
+import { signInAction } from "@/actions/signin";
 import { Loader2 } from "lucide-react";
 
 export const SignInform = () => {
@@ -35,7 +36,7 @@ export const SignInform = () => {
 
   const onFormSubmit = (values: z.infer<typeof LoginSchema>) => {
     startTransition(() => {
-      signIn(values).then((data) => {
+      signInAction(values).then((data) => {
         setSuccess(data?.success)
         setError(data?.error)
       })
@@ -76,7 +77,7 @@ export const SignInform = () => {
           <Error label={error} />
           <Success label={success} />
           <Button type="submit" className="w-full font-semibold">
-            {isPending ? <Loader2 className="size-4 animate-spin"/>  : "SignIn" }
+            {isPending ? <Loader2 className="size-5 animate-spin"/>  : "SignIn" }
           </Button>
         </form>
       </Form>
