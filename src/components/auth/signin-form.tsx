@@ -21,8 +21,13 @@ import { Success } from "../success";
 import { CardWrapper } from "./card-wrapper";
 import { signInAction } from "@/actions/signin";
 import { Loader2 } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 export const SignInform = () => {
+  const params = useSearchParams();
+  const authError = params.get("error")
+  const errorMessage = authError === "OAuthAccountNotLinked" ? "Email is already linked with different account" : ""
+  console.log(authError)
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("")
   const [success, setSuccess] = useState<string | undefined>("")
@@ -74,10 +79,10 @@ export const SignInform = () => {
               </FormItem>
             )}
           />
-          <Error label={error} />
-          <Success label={success} />
+          <Error label={error || errorMessage} />
+          <Success label={success || ""} />
           <Button type="submit" className="w-full font-semibold">
-            {isPending ? <Loader2 className="size-5 animate-spin"/>  : "SignIn" }
+            {isPending ? <Loader2 className="size-5 animate-spin" /> : "SignIn"}
           </Button>
         </form>
       </Form>

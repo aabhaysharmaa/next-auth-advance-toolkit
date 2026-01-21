@@ -1,14 +1,16 @@
 "use client";
-
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { Button } from "../ui/button";
 
+import { signIn } from "next-auth/react"
+
+type OAuthProvider = "google" | "github"
 
 export const Socials = () => {
 
-	const handleSocial = (label: string) => {
-		console.log(label)
+	const handleSocial = (provider : OAuthProvider) => {
+		 signIn(provider)
 	}
 
 	return (
