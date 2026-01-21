@@ -26,7 +26,7 @@ import { useSearchParams } from "next/navigation";
 export const SignInform = () => {
   const params = useSearchParams();
   const authError = params.get("error")
-  const errorMessage = authError === "OAuthAccountNotLinked" ? "Email is already linked with different account" : ""
+  const errorMessage = authError === "OAuthAccountNotLinked" ? "Email is already linked with different Provider" : ""
   console.log(authError)
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("")
