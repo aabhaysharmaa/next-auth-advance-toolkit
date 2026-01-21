@@ -2,15 +2,15 @@
 
 import bcrypt from "bcryptjs";
 
-import { LoginSchema } from "@/schemas";
+import { RegisterSchema } from "@/schemas";
 import { db } from "@/lib/db";
 
 export const signUpAction = async (values: unknown) => {
-	const validatedFields = LoginSchema.safeParse(values)
+	const validatedFields = RegisterSchema.safeParse(values)
 	if (!validatedFields.success) {
 		return { error: "Invalid Field" }
 	}
-	const { email, password } = validatedFields.data;
+	const { email, password , name } = validatedFields.data;
 	const hashedPassword = await bcrypt.hash(password, 10);
 
 	const existingEmail = await db.user.findUnique({ where: { email } })
@@ -21,6 +21,7 @@ export const signUpAction = async (values: unknown) => {
 	await db.user.create({
 		data: {
 			email,
+			name,
 			password: hashedPassword
 		}
 	})

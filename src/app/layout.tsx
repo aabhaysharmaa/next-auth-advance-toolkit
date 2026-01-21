@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Next Auth",
+  title: "Auth Js",
   description: "Next Auth V5 advance toolKit",
   icons : "/logo.png"
 };
