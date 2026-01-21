@@ -6,7 +6,7 @@ interface CardWrapperProps {
 	headerLabel: string
 	backButtonLabel: string
 	backButtonHref: string
-	showSocial: boolean
+	showSocial?: boolean
 }
 
 import {

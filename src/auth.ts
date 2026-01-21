@@ -8,6 +8,10 @@ import { UserRole } from "./generated/prisma/enums";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(db),
+  pages : {
+    signIn : "/sign-in",
+    error : "/error"
+  },
   callbacks: {
     async session({ session, token }) {
       if (token.sub) {
