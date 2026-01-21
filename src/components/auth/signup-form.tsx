@@ -14,7 +14,7 @@ import * as z from "zod";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
-import { signUp } from "@/actions/signup";
+import { signUpAction } from "@/actions/signup";
 import { RegisterSchema } from "@/schemas";
 import { Loader2 } from "lucide-react";
 import { Error } from "../error";
@@ -36,7 +36,7 @@ export const SignUpForm = () => {
 
   const onFormSubmit = (values: z.infer<typeof RegisterSchema>) => {
     startTransition(() => {
-      signUp(values).then((data) => {
+      signUpAction(values).then((data) => {
         setSuccess(data?.success)
         setError(data?.error)
       })
