@@ -44,7 +44,7 @@ export const SignUpForm = () => {
   }
 
   return (
-    <CardWrapper headerLabel="Create an account" backButtonLabel="Already have an account?" backButtonHref="/sign-up" showSocial>
+    <CardWrapper headerLabel="Create an account" backButtonLabel="Already have an account?" backButtonHref="/sign-in" showSocial>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onFormSubmit)} className="space-y-4">
           <div className="space-y-4">
