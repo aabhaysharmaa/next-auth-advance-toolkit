@@ -8,11 +8,23 @@ import { UserRole } from "./generated/prisma/enums";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(db),
-  pages : {
-    signIn : "/sign-in",
-    error : "/error"
+  pages: {
+    signIn: "/sign-in",
+    error: "/auth/error"
   },
+
   callbacks: {
+    async signIn({ user, account }) {
+      // just because we don't handle OAuth email verification so we must have to allow to signIn without nay restriction
+      if (account?.provider !== "credentials") return true
+      const existingUser = await getUserById(user.id as string)
+      // Prevent SignIn without emailVerification
+      if (!existingUser?.emailVerified) {
+        return false
+      }
+      // ADD 2FA check
+      return true
+    },
     async session({ session, token }) {
       if (token.sub) {
         session.user.id = token.sub
@@ -20,7 +32,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       if (token.role && session.user) {
         session.user.role = token.role as UserRole
       }
-      console.log({ "token": token, "session": session })
       return session
     },
     async jwt({ token }) {

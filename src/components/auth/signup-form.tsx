@@ -48,7 +48,6 @@ export const SignUpForm = () => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onFormSubmit)} className="space-y-4">
           <div className="space-y-4">
-
             <FormField
               name="name"
               render={({ field }) => (
@@ -58,7 +57,6 @@ export const SignUpForm = () => {
                     <Input disabled={isPending} placeholder="John doe" type="text" className="focus-visible:ring-0"  {...field} />
                   </FormControl>
                   <FormMessage />
-
                 </FormItem>
               )}
             />
@@ -89,10 +87,10 @@ export const SignUpForm = () => {
               )}
             />
           </div>
-          <Error label={error} />
-          <Success label={success} />
+          <Error label={error as string} />
+          <Success label={success as string} />
           <Button type="submit" className="w-full font-semibold">
-            {isPending ? <Loader2 className="size-4 animate-spin" /> : "SignIn"}
+            {isPending ? <Loader2 className="size-4 animate-spin" /> : "Create an account"}
           </Button>
         </form>
       </Form>
