@@ -22,12 +22,13 @@ import { CardWrapper } from "./card-wrapper";
 import { signInAction } from "@/actions/signin";
 import { Loader2 } from "lucide-react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 export const SignInform = () => {
   const params = useSearchParams();
   const authError = params.get("error")
-  const errorMessage = authError === "OAuthAccountNotLinked" ? "Email is already linked with different Provider" : ""
-  console.log(authError)
+  const errorMessage = authError === "OAuthAccountNotLinked" ? "Email is already linked with different Provider" : "";
+
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("")
   const [success, setSuccess] = useState<string | undefined>("")
@@ -52,7 +53,7 @@ export const SignInform = () => {
     <CardWrapper headerLabel="welcome Back" backButtonLabel="Don't have an account?" backButtonHref="/sign-up" showSocial>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onFormSubmit)} className="space-y-4">
-          <div className="space-y-4">
+          <div className="space-y-6">
             <FormField
               name="email"
               render={({ field }) => (
@@ -65,20 +66,24 @@ export const SignInform = () => {
                 </FormItem>
               )}
             />
+            <div>
+              <FormField
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input disabled={isPending} placeholder="*********" type="password" className="focus-visible:ring-0"  {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button variant="link" size="sm" type="button" asChild className="p-0 font-normal m-0">
+                <Link href="/auth/reset">Forgot Password?</Link>
+              </Button>
+            </div>
           </div>
-          <FormField
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input disabled={isPending} placeholder="*********" type="password" className="focus-visible:ring-0"  {...field} />
-                </FormControl>
-                <FormMessage />
-
-              </FormItem>
-            )}
-          />
           <Error label={error || errorMessage} />
           <Success label={success as string} />
           <Button type="submit" className="w-full font-semibold">

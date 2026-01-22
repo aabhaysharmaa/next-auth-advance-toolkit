@@ -28,8 +28,11 @@ export const signUpAction = async (values: unknown) => {
 		}
 	})
 	// TODO : send verification email token
-	const verificationToken = await  generateVerificationToken(email);
-	await sendVerificationEmail(verificationToken?.email as string,verificationToken?.token as string)
+	const verificationToken = await generateVerificationToken(email);
+	if (!verificationToken) {
+		return { error: "Cannot generate token" }
+	}
+	await sendVerificationEmail(verificationToken?.email as string, verificationToken?.token)
 
 	return { success: "ConformationEmail Sent!" }
 }
