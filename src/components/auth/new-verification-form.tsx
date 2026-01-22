@@ -39,9 +39,9 @@ export const NewVerificationForm = () => {
 					<BeatLoader color="skyblue" />
 				)}
 				<Success label={success as string} />
-				if(!success) {
+				{!success && (
 					<Error label={error} />
-				}
+				)}
 			</div>
 
 		</CardWrapper>
