@@ -28,6 +28,7 @@ export const SignInform = () => {
   const params = useSearchParams();
   const authError = params.get("error")
   const errorMessage = authError === "OAuthAccountNotLinked" ? "Email is already linked with different Provider" : "";
+  const [isTwoFactor, setIsTwoFactor] = useState(false)
 
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("")
@@ -36,54 +37,90 @@ export const SignInform = () => {
     resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: "",
-      password: ""
+      password: "",
+      code: ""
     }
   })
 
   const onFormSubmit = (values: z.infer<typeof LoginSchema>) => {
+    setError("")
+    setSuccess("")
     startTransition(() => {
       signInAction(values).then((data) => {
-        setSuccess(data?.success)
-        setError(data?.error)
+        if (data?.error) {
+          form.reset()
+          setError(data.error)
+        }
+        if (data?.success) {
+          form.reset()
+          setSuccess(data.success)
+        }
+        if (data?.TwoFactor) {
+          setIsTwoFactor(true)
+        }
+      }).catch(() => {
+        setError("Something went wrong!")
       })
     })
   }
 
   return (
-    <CardWrapper headerLabel="welcome Back" backButtonLabel="Don't have an account?" backButtonHref="/sign-up" showSocial>
+    <CardWrapper headerLabel="welcome Back" backButtonLabel="Don't have an account?" backButtonHref="/sign-up" showSocial={!isTwoFactor}>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onFormSubmit)} className="space-y-4">
           <div className="space-y-6">
-            <FormField
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input disabled={isPending} placeholder="example@gmail.com" type="email" className="focus-visible:ring-0"  {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div>
+            {isTwoFactor && (
               <FormField
-                name="password"
+                name="code"
+                control={form.control}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>Code</FormLabel>
                     <FormControl>
-                      <Input disabled={isPending} placeholder="*********" type="password" className="focus-visible:ring-0"  {...field} />
+                      <Input disabled={isPending} placeholder="******" type="password" className="focus-visible:ring-0"  {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button variant="link" size="sm" type="button" asChild className="p-0 font-normal m-0">
-                <Link href="/auth/reset">Forgot Password?</Link>
-              </Button>
-            </div>
+            )}
+
+
+            {!isTwoFactor && (
+              <>
+                <FormField
+                  name="email"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input disabled={isPending} placeholder="example@gmail.com" type="email" className="focus-visible:ring-0"  {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <Input disabled={isPending} placeholder="*********" type="password" className="focus-visible:ring-0"  {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button variant="link" size="sm" type="button" asChild className="p-0 font-normal m-0">
+                  <Link href="/auth/reset">Forgot Password?</Link>
+                </Button>
+              </>
+            )}
           </div>
+
           <Error label={error || errorMessage} />
           <Success label={success as string} />
           <Button type="submit" className="w-full font-semibold">
