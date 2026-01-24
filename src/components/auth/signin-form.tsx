@@ -27,6 +27,7 @@ import Link from "next/link";
 export const SignInform = () => {
   const params = useSearchParams();
   const authError = params.get("error")
+  const callbackUrl = params.get("callbackUrl")
   const errorMessage = authError === "OAuthAccountNotLinked" ? "Email is already linked with different Provider" : "";
   const [isTwoFactor, setIsTwoFactor] = useState(false)
 
@@ -46,7 +47,7 @@ export const SignInform = () => {
     setError("")
     setSuccess("")
     startTransition(() => {
-      signInAction(values).then((data) => {
+      signInAction(values, callbackUrl as string).then((data) => {
         if (data?.error) {
           form.reset()
           setError(data.error)

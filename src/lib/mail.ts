@@ -14,7 +14,7 @@ export const send2FaCodeEmail = async (email: string, code: string) => {
 
 
 export const sendVerificationEmail = async (email: string, token: string) => {
-	const confirmLink = `http://localhost:3000/auth/new-verification?token=${token}`;
+	const confirmLink = `https://next-auth-advance-toolkit.vercel.app/auth/new-verification?token=${token}`;
 
 	await resend.emails.send({
 		from: "onboard@resend.dev",
@@ -26,7 +26,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
 
 
 export const sendVerificationEmailForResetPassword = async (email: string, token: string) => {
-	const confirmLink = `http://localhost:3000/auth/new-password/?token=${token}`;
+	const confirmLink = `https://next-auth-advance-toolkit.vercel.app/auth/new-password/?token=${token}`;
 
 	await resend.emails.send({
 		from: "onboard@resend.dev",

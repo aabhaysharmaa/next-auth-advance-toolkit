@@ -1,4 +1,3 @@
-
 import authConfig from "./auth.config";
 import NextAuth from "next-auth";
 
@@ -12,7 +11,7 @@ import {
 const { auth } = NextAuth(authConfig)
 export default auth(async function middleware(req) {
 	const isLoggedIn = !!req.auth;
-	const { nextUrl } = req ;
+	const { nextUrl } = req;
 
 	const isApiAuthRoutes = nextUrl.pathname.startsWith(apiAuthPrefix);
 	const isPublicRoutes = publicRoutes.includes(nextUrl.pathname);
@@ -26,11 +25,17 @@ export default auth(async function middleware(req) {
 		if (isLoggedIn) {
 			return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
 		}
-		return null
+		return null;
 	}
 
 	if (!isLoggedIn && !isPublicRoutes) {
-		return Response.redirect(new URL("/sign-in", nextUrl))
+		let callbackUrl = nextUrl.pathname;
+
+		if (nextUrl.search) {
+			callbackUrl += nextUrl.search
+		}
+		const encodedCallUrl = encodeURIComponent(callbackUrl);
+		return Response.redirect(new URL(`/sign-in?callbackUrl=${encodedCallUrl}`, nextUrl));
 	}
 	return null;
 })
