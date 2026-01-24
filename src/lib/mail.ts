@@ -2,6 +2,7 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESENT_API_KEY);
 
+const NEXT_PUBLIC_URL = process.env.NEXT_PUBLIC_APP_URL;
 
 export const send2FaCodeEmail = async (email: string, code: string) => {
 	await resend.emails.send({
@@ -12,9 +13,8 @@ export const send2FaCodeEmail = async (email: string, code: string) => {
 	})
 }
 
-
 export const sendVerificationEmail = async (email: string, token: string) => {
-	const confirmLink = `https://next-auth-advance-toolkit.vercel.app/auth/new-verification?token=${token}`;
+	const confirmLink = `${NEXT_PUBLIC_URL}/auth/new-verification?token=${token}`;
 
 	await resend.emails.send({
 		from: "onboard@resend.dev",
@@ -26,7 +26,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
 
 
 export const sendVerificationEmailForResetPassword = async (email: string, token: string) => {
-	const confirmLink = `https://next-auth-advance-toolkit.vercel.app/auth/new-password/?token=${token}`;
+	const confirmLink = `${NEXT_PUBLIC_URL}/auth/new-password/?token=${token}`;
 
 	await resend.emails.send({
 		from: "onboard@resend.dev",
