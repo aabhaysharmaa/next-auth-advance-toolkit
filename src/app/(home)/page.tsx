@@ -16,7 +16,7 @@ const Home = () => {
         <h1 className={cn("text-6xl  text-white font-bold drop-shadow-md", font.className)}>🔐Auth</h1>
         <p className="text-white text-xl">A Advance Authentication System</p>
         <div className="">
-          <LoginButton mode="redirect" >
+          <LoginButton mode="modal" asChild >
             <Button variant="secondary" className="font-semibold" size="lg">SignIn</Button>
           </LoginButton>
         </div>

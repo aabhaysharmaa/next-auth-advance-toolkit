@@ -73,7 +73,6 @@ export const signInAction = async (values: z.infer<typeof LoginSchema>) => {
 			})
 		} else {
 			const twoFaToken = await generate2FaToken(email)
-			console.log({ twoFaToken })
 			if (!twoFaToken) {
 				return { error: "cannot generate token try again later" }
 			}
