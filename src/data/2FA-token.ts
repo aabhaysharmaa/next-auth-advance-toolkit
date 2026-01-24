@@ -7,7 +7,7 @@ import crypto from "crypto";
 export const generate2FaToken = async (email: string) => {
 	try {
 		const code = crypto.randomInt(100_000, 100_000_0).toString();
-		const expires = new Date(new Date().getTime() + 3600 * 1000) // 1 hours
+		const expires = new Date(new Date().getTime() + 5 * 60 * 1000) // 5 mins
 
 		const existingToken = await getTwoFactorFaVerificationCodeByEmail(email);
 		if (existingToken) {

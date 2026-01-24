@@ -5,7 +5,7 @@ import { generate2FaToken } from "@/data/2FA-token";
 import { getUserByEmail } from "@/data/user";
 import { getTwoFactorFaVerificationCodeByEmail, getTwoFactorVerificationById } from "@/lib/2FA-token";
 import { db } from "@/lib/db";
-import { sendVerificationEmail } from "@/lib/mail";
+import { send2FaCodeEmail, sendVerificationEmail } from "@/lib/mail";
 import { generateVerificationToken } from "@/lib/token";
 import { DEFAULT_LOGIN_REDIRECT } from "@/route";
 import { LoginSchema } from "@/schemas";
@@ -78,7 +78,7 @@ export const signInAction = async (values: z.infer<typeof LoginSchema>) => {
 				return { error: "cannot generate token try again later" }
 			}
 
-			// await send2FaCodeEmail(twoFaToken?.email, twoFaToken?.token)
+			await send2FaCodeEmail(twoFaToken?.email, twoFaToken?.token)
 			return { "TwoFactor": true }
 		}
 	}

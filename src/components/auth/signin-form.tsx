@@ -58,8 +58,6 @@ export const SignInform = () => {
         if (data?.TwoFactor) {
           setIsTwoFactor(true)
         }
-      }).catch(() => {
-        setError("Something went wrong!")
       })
     })
   }

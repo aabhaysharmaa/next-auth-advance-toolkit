@@ -1,7 +1,7 @@
 import { CheckCircle } from "lucide-react";
 
 interface SuccessProps {
-	label: string
+	label?: string
 }
 
 export const Success = ({ label }: SuccessProps) => {

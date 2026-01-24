@@ -2,9 +2,9 @@
 
 import bcrypt from "bcryptjs";
 
-import { RegisterSchema } from "@/schemas";
 import { db } from "@/lib/db";
 import { generateVerificationToken } from "@/lib/token";
+import { RegisterSchema } from "@/schemas";
 import { sendVerificationEmail } from "@/lib/mail";
 
 export const signUpAction = async (values: unknown) => {
@@ -27,7 +27,6 @@ export const signUpAction = async (values: unknown) => {
 			password: hashedPassword
 		}
 	})
-	// TODO : send verification email token
 	const verificationToken = await generateVerificationToken(email);
 	if (!verificationToken) {
 		return { error: "Cannot generate token" }
