@@ -1,11 +1,10 @@
 # SECURE - Next.js Authentication & User Management Platform
 
-![demo](https://vimeo.com/1157758998?share=copy&fl=sv&fe=ci)
 A fully-featured authentication and user management system built for SaaS applications, combining Next.js 14, NextAuth v5, and role-based access control (RBAC) with two-factor authentication for maximum security and flexibility.
 
 ---
 
-## LIVE DEMO --  [Click here to watch a demo video](http://www.google.com)
+## LIVE DEMO --  [CLICK HERE TO WATCH DEMO ](https://vimeo.com/1157758998)
 
 ## What is SECURE?
 
