@@ -4,7 +4,6 @@ A fully-featured authentication and user management system built for SaaS applic
 
 ---
 
-## LIVE DEMO --  [CLICK HERE TO WATCH DEMO ](https://vimeo.com/1157758998)
 
 ## What is SECURE?
 
